@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Array functions - rest countries task</p>
+    <script>
+        const xyz = new XMLHttpRequest();
+xyz.open("GET","https://restcountries.com/v3.1/all");
+xyz.send();
+
+xyz.responseType = "json";
+
+xyz.onload = function displayResult(){
+    const countries = xyz.response;
+   // console.log(countries)
+
+//Get all the countries from Asia region by filter fun: 
+    const asianCountries = countries.filter((data)=>{
+        return data.region == "Asia"
+    })
+   console.log(asianCountries);
+
+
+// Get all the countries with a population less than 2 lakhs by filter fun:   
+    let lowPopulationCountries = countries.filter((data)=>{
+        return data.population < 200000;
+    })
+    console.log(lowPopulationCountries);
+
+// Print the countries data by forEachfun:
+    countries.forEach(element=>
+        console.log(`Name: ${element.name.common},capital: ${element.capital},Flag: ${element.flags.svg}`)
+    )
+
+//Print the total population of countries by reduce fun: 
+    let totalPopulation = [];
+    let people = countries.filter((data)=>{
+        let total = data.population   
+       // console.log(total);
+        totalPopulation.push(total)          
+})
+//console.log(totalPopulation);
+
+const finaladd = totalPopulation.reduce((acc,cur)=>{
+    return acc + cur;
+})
+console.log(finaladd); 
+
+
+
+// Print the country which uses US Dollar as currency:
+let x = countries.filter((element)=>{
+    let y = element.currencies !== undefined;
+    if(y){
+    let z = element.currencies.USD !== undefined;
+     if(z){
+    console.log(`USD currency country: ${element.name.common}`);
+   }
+}
+})
+
+
+};
+
+    </script>
+</body>
+</html>
